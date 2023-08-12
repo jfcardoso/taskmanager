@@ -14,12 +14,12 @@ public class Task {
     private String description;
     private String observation;
     private Date deadline;
-    private boolean isCompleted;
+    private boolean completed;
     private Date createdAt;
     private Date updatedAt;
 
     public Task(int id, int idProject, String name, String description,
-            String observation, Date deadline, boolean isCompleted, 
+            String observation, Date deadline, boolean completed, 
             Date createdAt, Date updatedAt) {
         this.id = id;
         this.idProject = idProject;
@@ -27,7 +27,7 @@ public class Task {
         this.description = description;
         this.observation = observation;
         this.deadline = deadline;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -80,12 +80,12 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public boolean isIsCompleted() {
-        return isCompleted;
+    public boolean getCompleted() {
+        return completed;
     }
 
-    public void setIsCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public Date getCreatedAt() {
@@ -108,8 +108,8 @@ public class Task {
     public String toString() {
         return "Task{" + "id=" + id + ", idProject=" + idProject + ", name=" + 
                 name + ", description=" + description + ", observation=" + 
-                observation + ", deadline=" + deadline + ", isCompleted=" + 
-                isCompleted + ", createdAt=" + createdAt + ", updatedAt=" + 
+                observation + ", deadline=" + deadline + ", completed=" + 
+                completed + ", createdAt=" + createdAt + ", updatedAt=" + 
                 updatedAt + '}';
     }   
 }
