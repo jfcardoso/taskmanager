@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Task;
@@ -92,7 +91,7 @@ public class TaskController {
        }       
    }
    
-   public void removeById(int idTask) throws SQLException{       
+   public void removeById(int idTask){       
        String sql = "DELETE FROM tasks WHERE ID = ?";
        
        Connection conn = null;
