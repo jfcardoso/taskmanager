@@ -4,6 +4,7 @@ package util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 /**
  * Classe Responsável por criar a conexão com o banco de dados, e devolver 
  * para onde for necessário realizar consultas e manipulação do BD.
@@ -44,6 +45,25 @@ public class ConnectionFactory {
             
             if(stmt != null){
                 stmt.close();
+            }
+        }catch (Exception ex){
+            throw new RuntimeException("Erro ao fechar a conexão com o Banco de Dados",ex);
+        }
+    }
+    
+    public static void closeConnection(Connection conn, PreparedStatement stmt,
+                                       ResultSet result){
+        try{
+            if(conn != null){
+                conn.close();
+            }
+            
+            if(stmt != null){
+                stmt.close();
+            }
+            
+            if(result != null){
+                result.close();
             }
         }catch (Exception ex){
             throw new RuntimeException("Erro ao fechar a conexão com o Banco de Dados",ex);
