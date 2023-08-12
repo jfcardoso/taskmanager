@@ -43,15 +43,49 @@ public class TaskController {
            statement.setDate(7,new Date(task.getCreatedAt().getTime()));
            statement.setDate(8,new Date(task.getUpdatedAt().getTime()));
            statement.execute();           
-       }catch(SQLException ex){
-           throw new RuntimeException("Erro ao incluir a tarefa!" + ex.getMessage(),ex);           
+       }catch(Exception ex){
+           throw new RuntimeException("Erro ao incluir a tarefa!"
+                   + ex.getMessage(),ex);           
        }finally{
-           ConnectionFactory.closeConnection(conn);
+           ConnectionFactory.closeConnection(conn,statement);
        }        
    }
     
    public void update(Task task){
        
+       String sql = "UPDATE tasks SET"
+               + "idProject = ?,"
+               + "name = ?,"
+               + "description = ?,"
+               + "completed = ?,"
+               + "observation = ?,"
+               + "deadline = ?,"
+               + "createdAt = ?,"
+               + "updatedAt = ?"
+               + "WHERE id = ?";
+       
+       Connection conn = null;
+       PreparedStatement statement = null;
+       
+       try{
+           conn = ConnectionFactory.getConnection();
+           statement = conn.prepareStatement(sql);
+           //setando os parâmetros
+           statement.setInt(1,task.getIdProject());
+           statement.setString(2, task.getName());
+           statement.setString(3, task.getDescription());
+           statement.setBoolean(4, task.getCompleted());
+           statement.setString(5, task.getObservation());
+           statement.setDate(6,new Date(task.getDeadline().getTime()));
+           statement.setDate(7,new Date(task.getCreatedAt().getTime()));
+           statement.setDate(8,new Date(task.getUpdatedAt().getTime()));
+           statement.execute();           
+       }catch(Exception ex){
+           throw new RuntimeException("Erro ao excluir a tarefa!"
+                   + ex.getMessage(),ex);           
+       }finally{
+           ConnectionFactory.closeConnection(conn,statement);
+       }       
    }
    
    public void removeById(int idTask) throws SQLException{
@@ -59,19 +93,19 @@ public class TaskController {
        String sql = "DELETE FROM tasks WHERE ID = ?";
        
        Connection conn = null;
-       // obj que auxilia na preparação do comando SQL que será executada no BD.
        PreparedStatement statement = null;
        
        try{
            conn = ConnectionFactory.getConnection();
            statement = conn.prepareStatement(sql);
-           statement.setInt(1,idTask); //setando os parâmetros
+           statement.setInt(1,idTask);
            statement.execute();           
-       }catch(SQLException ex){
-           throw new SQLException("Erro ao excluir a tarefa!",ex);
+       }catch(Exception ex){
+           throw new RuntimeException("Erro ao excluir a tarefa!"
+                   + ex.getMessage(),ex);
            
        }finally{
-           ConnectionFactory.closeConnection(conn);
+           ConnectionFactory.closeConnection(conn,statement);
        }       
    }
    
