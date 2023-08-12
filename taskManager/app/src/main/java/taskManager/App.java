@@ -3,15 +3,58 @@
  */
 package taskManager;
 
+import controller.ProjectController;
+import controller.TaskController;
 import java.sql.Connection;
+import java.util.Date;
+import java.util.List;
+import model.Project;
+import model.Task;
 import util.ConnectionFactory;
 
 public class App {
     
     public static void main(String[] args) {
         
-        Connection c = ConnectionFactory.getConnection();
+//        ProjectController projectController = new ProjectController();
+//        Project project = new Project();
+//        
+//        project.setName("Projeto 2");
+//        project.setDescription("Teste de inclusão de um novo projeto");
+//        projectController.save(project);
         
-        ConnectionFactory.closeConnection(c);        
+//        ProjectController projectController = new ProjectController();
+//        Project project = new Project();
+//        
+//        projectController.removeById(2);
+        
+//        project.setId(2);
+//        project.setName("Projeto 02");
+//        project.setDescription("Teste update projeto");
+//        projectController.update(project);
+        
+//        List<Project> projects = projectController.getAllProject();
+//        
+//        System.out.println("Total de projetos: " + projects.size());
+
+    TaskController tc = new TaskController();
+    Task task = new Task();
+    
+//    task.setIdProject(1);
+//    task.setName("Tarefa 1");
+//    task.setDescription("teste de insercao de tarefas");
+//    task.setObservation("campo obs");
+//    task.setCompleted(false);
+//    task.setDeadline(new Date());
+//    
+//    tc.save(task);
+    
+    task.setIdProject(1);
+    task.setName("Tarefa nº 1");
+    tc.update(task);
+    
+//    List<Task> tarefas = tc.getAllTasks(1);
+//    System.out.println("Total de tarefas: " + tarefas.size());        
+        
     }
 }

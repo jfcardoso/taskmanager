@@ -56,8 +56,7 @@ public class TaskController {
    }
     
    public void update(Task task){       
-       String sql = "UPDATE tasks SET"
-               + "idProject = ?,"
+       String sql = "UPDATE tasks SET idProject = ?,"
                + "name = ?,"
                + "description = ?,"
                + "completed = ?,"
@@ -78,7 +77,7 @@ public class TaskController {
            statement.setString(3, task.getDescription());
            statement.setBoolean(4, task.getCompleted());
            statement.setString(5, task.getObservation());
-           statement.setDate(6,new Date(task.getDeadline().getTime()));
+           statement.setDate(6,new Date(task.getDeadline().getTime())); 
            statement.setDate(7,new Date(task.getCreatedAt().getTime()));
            statement.setDate(8,new Date(task.getUpdatedAt().getTime()));
            statement.setInt(9,task.getId());
