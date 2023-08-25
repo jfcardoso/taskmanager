@@ -48,7 +48,7 @@ public class TaskController {
            // executando a query
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao incluir a tarefa! "
+           throw new RuntimeException("Error adding task! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -83,7 +83,7 @@ public class TaskController {
            statement.setInt(9,task.getId());
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao atualizar a tarefa! "
+           throw new RuntimeException("Error updating task! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -102,7 +102,7 @@ public class TaskController {
            statement.setInt(1,idTask);
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao excluir a tarefa!"
+           throw new RuntimeException("Error deleting task! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -142,7 +142,7 @@ public class TaskController {
            }
         
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao carregar a lista de tarefas!"
+           throw new RuntimeException("Error loading task list!"
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn, statement, result);

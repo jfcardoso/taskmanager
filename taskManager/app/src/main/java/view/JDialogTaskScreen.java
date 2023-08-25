@@ -4,18 +4,26 @@
  */
 package view;
 
+import controller.TaskController;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Project;
+import model.Task;
+
 /**
  *
  * @author Jefferson
  */
 public class JDialogTaskScreen extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JDialogProjectScreen
-     */
+    TaskController taskController;
+    Project project;
+    
     public JDialogTaskScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        taskController = new TaskController();
     }
 
     /**
@@ -53,6 +61,11 @@ public class JDialogTaskScreen extends javax.swing.JDialog {
         jLabelNewTaskSave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelNewTaskSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
         jLabelNewTaskSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelNewTaskSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelNewTaskSaveMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelNewTaskTitleLayout = new javax.swing.GroupLayout(jPanelNewTaskTitle);
         jPanelNewTaskTitle.setLayout(jPanelNewTaskTitleLayout);
@@ -167,6 +180,32 @@ public class JDialogTaskScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelNewTaskSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewTaskSaveMouseClicked
+        
+        try {
+            Task task = new Task();
+            
+            //task.setIdProject(project.getId()); //setting the task to a specific project
+            task.setIdProject(3);
+            task.setName(jTextFieldNewTaskName.getText());
+            task.setDescription(jTextAreaNewTaskDescription.getText());            
+            task.setObservation(jTextAreaNewTaskNote.getText());
+            task.setCompleted(false);
+            
+            //Formatting the date to the correct format to save it in DB.
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date deadline = null;
+            deadline = dateFormat.parse(jFormattedTextNewTaskDeadline.getText());
+            task.setDeadline(deadline);
+            
+            taskController.save(task);
+            JOptionPane.showMessageDialog(rootPane,"Task successfully saved.");            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane,ex.getMessage());
+        }        
+        this.dispose();
+    }//GEN-LAST:event_jLabelNewTaskSaveMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -178,7 +217,7 @@ public class JDialogTaskScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -226,4 +265,8 @@ public class JDialogTaskScreen extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaNewTaskNote;
     private javax.swing.JTextField jTextFieldNewTaskName;
     // End of variables declaration//GEN-END:variables
+
+    public void setProject(Project project) {
+        this.project = project;
+    }    
 }
