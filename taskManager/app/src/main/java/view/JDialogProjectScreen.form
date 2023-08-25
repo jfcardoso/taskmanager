@@ -53,7 +53,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelNewProjectTitle" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelNewProjectCheck" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="jLabelNewProjectSave" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -63,7 +63,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelNewProjectCheck" pref="59" max="32767" attributes="0"/>
+                      <Component id="jLabelNewProjectSave" pref="59" max="32767" attributes="0"/>
                       <Component id="jLabelNewProjectTitle" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -83,7 +83,7 @@
             <Property name="text" type="java.lang.String" value="New Project"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelNewProjectCheck">
+        <Component class="javax.swing.JLabel" name="jLabelNewProjectSave">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -95,6 +95,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelNewProjectSaveMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

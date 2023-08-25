@@ -39,7 +39,7 @@ public class ProjectController {
            // executando a query
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao incluir o projeto! "
+           throw new RuntimeException("Error adding project! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -66,7 +66,7 @@ public class ProjectController {
            statement.setInt(5,project.getId());
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao atualizar o projeto! "
+           throw new RuntimeException("Error updating project! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -85,7 +85,7 @@ public class ProjectController {
            statement.setInt(1,id);
            statement.execute();           
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao excluir o projeto!"
+           throw new RuntimeException("Error deleting project! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn,statement);
@@ -121,7 +121,7 @@ public class ProjectController {
            }
         
        }catch(Exception ex){
-           throw new RuntimeException("Erro ao carregar a lista de projetos!"
+           throw new RuntimeException("Error loading project list! "
                    + ex.getMessage(),ex);           
        }finally{
            ConnectionFactory.closeConnection(conn, statement, result);

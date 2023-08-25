@@ -4,18 +4,26 @@
  */
 package view;
 
+import controller.ProjectController;
+import javax.swing.JOptionPane;
+import model.Project;
+
 /**
  *
  * @author Jefferson
  */
 public class JDialogProjectScreen extends javax.swing.JDialog {
-
+    
+    // gerencia o acesso ao BD
+    ProjectController projectController;
+    
     /**
      * Creates new form JDialogProjectScreen
      */
     public JDialogProjectScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        projectController = new ProjectController();
     }
 
     /**
@@ -29,7 +37,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
 
         jPanelNewProjectTitle = new javax.swing.JPanel();
         jLabelNewProjectTitle = new javax.swing.JLabel();
-        jLabelNewProjectCheck = new javax.swing.JLabel();
+        jLabelNewProjectSave = new javax.swing.JLabel();
         jPanelNewProjectForm = new javax.swing.JPanel();
         jLabelNewProjectNameCab = new javax.swing.JLabel();
         jTextFieldNewProjectName = new javax.swing.JTextField();
@@ -45,9 +53,14 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
         jLabelNewProjectTitle.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNewProjectTitle.setText("New Project");
 
-        jLabelNewProjectCheck.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelNewProjectCheck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
-        jLabelNewProjectCheck.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelNewProjectSave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNewProjectSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
+        jLabelNewProjectSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelNewProjectSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelNewProjectSaveMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelNewProjectTitleLayout = new javax.swing.GroupLayout(jPanelNewProjectTitle);
         jPanelNewProjectTitle.setLayout(jPanelNewProjectTitleLayout);
@@ -57,7 +70,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabelNewProjectTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelNewProjectCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelNewProjectSave, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelNewProjectTitleLayout.setVerticalGroup(
@@ -65,7 +78,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
             .addGroup(jPanelNewProjectTitleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelNewProjectTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNewProjectCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                    .addComponent(jLabelNewProjectSave, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                     .addComponent(jLabelNewProjectTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -132,6 +145,19 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelNewProjectSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewProjectSaveMouseClicked
+        try {
+            Project project = new Project();
+            project.setName(jTextFieldNewProjectName.getText());
+            project.setDescription(jTextAreaNewProjectDescription.getText());        
+            projectController.save(project);        
+            JOptionPane.showMessageDialog(rootPane,"Project successfully saved.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane,ex.getMessage());
+        }        
+        this.dispose();
+    }//GEN-LAST:event_jLabelNewProjectSaveMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -143,7 +169,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -175,9 +201,9 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelNewProjectCheck;
     private javax.swing.JLabel jLabelNewProjectDescriptionCab;
     private javax.swing.JLabel jLabelNewProjectNameCab;
+    private javax.swing.JLabel jLabelNewProjectSave;
     private javax.swing.JLabel jLabelNewProjectTitle;
     private javax.swing.JPanel jPanelNewProjectForm;
     private javax.swing.JPanel jPanelNewProjectTitle;
