@@ -332,8 +332,17 @@ public class MainScreen extends javax.swing.JFrame {
     private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
         //open a new projectDialogScreen 
         JDialogProjectScreen projectDialogScreen = new JDialogProjectScreen(this, rootPaneCheckingEnabled);
-        // set visible for the users
         projectDialogScreen.setVisible(true);
+        
+        /*
+        * Adding a listener to update the list as soon as a new project
+        * is saved to the DB. 
+        */
+        projectDialogScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent event) {
+                loadProjects();
+            }
+        });
     }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     private void jLabelTasksAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseClicked
