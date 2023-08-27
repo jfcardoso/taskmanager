@@ -4,10 +4,15 @@
  */
 package view;
 
+import controller.ProjectController;
+import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Project;
 
 /**
  *
@@ -15,12 +20,16 @@ import java.awt.event.WindowEvent;
  */
 public class MainScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainPrincipal
-     */
+    ProjectController projectController;
+    TaskController taskController;
+    //os projetos do BD serão carregados na lista de projetos.
+    DefaultListModel projectsModel;
+    
     public MainScreen() {
         initComponents();
         decorateJTableTasks();
+        initDataAccessObjects();
+        initComponentsModel();
     }
 
     /**
@@ -405,31 +414,40 @@ public class MainScreen extends javax.swing.JFrame {
 
         //Auto sort dos items da jTable
         jTableTasks.setAutoCreateRowSorter(true);
+    }
+    
+    private void initDataAccessObjects() {
+        projectController = new ProjectController();
+        taskController = new TaskController();
+    }
+    
+    private void initComponentsModel() {
+        projectsModel = new DefaultListModel();
+        loadProjects();
 
-        //Add event 
-//        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
-//            @Override
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
-//                int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
-//
-//                if (columnIndex == 3) {
-//                    Task task = tasksModel.getTasks().get(rowIndex);
-//                    taskDAO.update(task);
-//                }
-//            }
-//        });
+//        tasksModel = new TaskTableModel();
+//        jTableTasks.setModel(tasksModel);
+//        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new StatusColumnCellRenderer());
+//        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRederer("edit"));
+//        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRederer("delete"));
 
-//        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
-//            @Override
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                int row = jTableTasks.rowAtPoint(evt.getPoint());
-//                int col = jTableTasks.columnAtPoint(evt.getPoint());
-//                if (row >= 0 && col == 0) {
-//                    JOptionPane.showMessageDialog(rootPane, "teste");
-//
-//                }
-//            }
-//        });;
+//        if (!projectsModel.isEmpty()) {
+//            jListProjects.setSelectedIndex(0);
+//            int projectIndex = jListProjects.getSelectedIndex();
+//            Project project = (Project) projectsModel.get(projectIndex);
+//            //loadTasks(project.getId());
+//        }
+    }
+    
+    private void loadProjects() {
+        List<Project> projects = projectController.getAllProject();
+
+        projectsModel.clear();
+
+        for (int i = 0; i < projects.size(); i++) {
+            Project project = projects.get(i);
+            projectsModel.addElement(project);
+        }
+        jListProjects.setModel(projectsModel);
     }
 }
