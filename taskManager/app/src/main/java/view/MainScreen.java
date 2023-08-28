@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import model.Task;
 import util.TaskTableModel;
 
 /**
@@ -273,9 +274,11 @@ public class MainScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableTasks.setEditingRow(40);
         jTableTasks.setGridColor(new java.awt.Color(255, 255, 255));
         jTableTasks.setRowHeight(40);
         jTableTasks.setSelectionBackground(new java.awt.Color(51, 153, 255));
+        jTableTasks.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableTasks.setShowGrid(false);
         jTableTasks.setShowHorizontalLines(true);
         jScrollPaneTasks.setViewportView(jTableTasks);
@@ -438,6 +441,8 @@ public class MainScreen extends javax.swing.JFrame {
 
         tasksModel = new TaskTableModel();
         jTableTasks.setModel(tasksModel);
+        loadTasks(3);
+        
 //        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new StatusColumnCellRenderer());
 //        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRederer("edit"));
 //        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRederer("delete"));
@@ -446,10 +451,14 @@ public class MainScreen extends javax.swing.JFrame {
 //            jListProjects.setSelectedIndex(0);
 //            int projectIndex = jListProjects.getSelectedIndex();
 //            Project project = (Project) projectsModel.get(projectIndex);
-//            //loadTasks(project.getId());
+//            loadTasks(project.getId());
 //        }
     }
-    
+    // Load tasks into the TaskTableModel.
+    private void loadTasks(int projectId) {
+        List<Task> tasks = taskController.getAllTasks(projectId);
+        tasksModel.setTasks(tasks);
+    }    
     private void loadProjects() {
         List<Project> projects = projectController.getAllProject();
 

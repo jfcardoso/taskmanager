@@ -28,6 +28,32 @@ public class TaskTableModel extends AbstractTableModel{
     public int getColumnCount() {
         return columns.length;
     }
+    
+    @Override
+    // Returns the correct column names.
+    public String getColumnName(int columnIndex) {
+        return columns[columnIndex];
+    }
+    
+     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 3; // column 'Done?' can be edited.
+    }
+    
+    @Override
+    // Overriding the method to show the checkpoint in the 'Done?' column.
+    public Class<?> getColumnClass(int columnIndex) {
+        if (tasks.isEmpty()) {
+            return Object.class;
+        }
+        return this.getValueAt(0, columnIndex).getClass();
+    }
+    
+    @Override
+    // Overriding the method to allow editing of the 'Done?' column.
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        tasks.get(rowIndex).setCompleted((boolean) aValue);
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -47,5 +73,17 @@ public class TaskTableModel extends AbstractTableModel{
             default:
                 return "Data not found!";
         }       
+    }
+
+    public String[] getColumns() {
+        return columns;
+    }
+    
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }    
 }
