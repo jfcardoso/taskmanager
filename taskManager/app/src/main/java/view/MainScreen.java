@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import util.TaskTableModel;
 
 /**
  *
@@ -22,8 +23,9 @@ public class MainScreen extends javax.swing.JFrame {
 
     ProjectController projectController;
     TaskController taskController;
-    //os projetos do BD serão carregados na lista de projetos.
+    // DB projects will be loaded into this project list.
     DefaultListModel projectsModel;
+    TaskTableModel tasksModel;
     
     public MainScreen() {
         initComponents();
@@ -434,8 +436,8 @@ public class MainScreen extends javax.swing.JFrame {
         projectsModel = new DefaultListModel();
         loadProjects();
 
-//        tasksModel = new TaskTableModel();
-//        jTableTasks.setModel(tasksModel);
+        tasksModel = new TaskTableModel();
+        jTableTasks.setModel(tasksModel);
 //        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new StatusColumnCellRenderer());
 //        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRederer("edit"));
 //        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRederer("delete"));
