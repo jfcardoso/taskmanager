@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
 import util.TaskTableModel;
@@ -281,6 +282,11 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableTasks.setShowGrid(false);
         jTableTasks.setShowHorizontalLines(true);
+        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTasksMouseClicked(evt);
+            }
+        });
         jScrollPaneTasks.setViewportView(jTableTasks);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -336,7 +342,8 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
         //open a new projectDialogScreen 
-        JDialogProjectScreen projectDialogScreen = new JDialogProjectScreen(this, rootPaneCheckingEnabled);
+        JDialogProjectScreen projectDialogScreen =
+                new JDialogProjectScreen(this, rootPaneCheckingEnabled);
         projectDialogScreen.setVisible(true);
         
         /*
@@ -351,15 +358,52 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     private void jLabelTasksAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseClicked
-         //open a new taskDialogScreen 
-        JDialogTaskScreen taskDialogScreen = new JDialogTaskScreen(this, rootPaneCheckingEnabled);
         
-        // setting the project
-        // taskDialogScreen.setProject(null);
+        //open a new taskDialogScreen 
+        JDialogTaskScreen taskDialogScreen = 
+                new JDialogTaskScreen(this, rootPaneCheckingEnabled);
         
         // set visible for the users
         taskDialogScreen.setVisible(true);
+        
+        /* Adding a listener to update the list as soon as a new task
+        * is saved to the DB. 
+        */
+        taskDialogScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent event) {
+//                int projectIndex = jListProjects.getSelectedIndex();
+//                Project project = (Project) projectsModel.get(projectIndex);
+                loadTasks(3);
+            }
+        });
     }//GEN-LAST:event_jLabelTasksAddMouseClicked
+
+    private void jTableTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTasksMouseClicked
+        
+        // returns at which point in the screen the click event occurred
+        int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
+        int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
+        Task task = tasksModel.getTasks().get(rowIndex);
+
+        switch (columnIndex) {
+            case 1:
+                break;
+            case 3:
+                taskController.update(task);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(rootPane, "Editar a tarefa");
+                break;
+            case 5:
+                taskController.removeById(task.getId());
+                tasksModel.getTasks().remove(task);
+                
+                int projectIndex = jListProjects.getSelectedIndex();
+                Project project = (Project) projectsModel.get(projectIndex);
+                loadTasks(project.getId());
+                break;
+        }    
+    }//GEN-LAST:event_jTableTasksMouseClicked
 
     /**
      * @param args the command line arguments
