@@ -183,26 +183,35 @@ public class JDialogTaskScreen extends javax.swing.JDialog {
     private void jLabelNewTaskSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewTaskSaveMouseClicked
         
         try {
-            Task task = new Task();
+            if (!jTextFieldNewTaskName.getText().isEmpty()
+                    && !jFormattedTextNewTaskDeadline.getText().isEmpty()){
+                
+                Task task = new Task();
             
-            task.setIdProject(project.getId()); //setting the task to a specific project
-            task.setName(jTextFieldNewTaskName.getText());
-            task.setDescription(jTextAreaNewTaskDescription.getText());            
-            task.setObservation(jTextAreaNewTaskNote.getText());
-            task.setCompleted(false);
-            
-            //Formatting the date to the correct format to save it in DB.
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date deadline = null;
-            deadline = dateFormat.parse(jFormattedTextNewTaskDeadline.getText());
-            task.setDeadline(deadline);
-            
-            taskController.save(task);
-            JOptionPane.showMessageDialog(rootPane,"Task successfully saved.");            
+                task.setIdProject(project.getId()); //setting the task to a specific project
+                task.setName(jTextFieldNewTaskName.getText());
+                task.setDescription(jTextAreaNewTaskDescription.getText());            
+                task.setObservation(jTextAreaNewTaskNote.getText());
+                task.setCompleted(false);
+
+                //Formatting the date to the correct format to save it in DB.
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date deadline = null;
+                deadline = dateFormat.parse(jFormattedTextNewTaskDeadline.getText());
+                task.setDeadline(deadline);
+
+                taskController.save(task);
+                JOptionPane.showMessageDialog(rootPane,"Task successfully saved.");
+                
+                 this.dispose();
+                 
+            }else {
+                JOptionPane.showMessageDialog(rootPane,
+                         "Task name and deadline must be filled in!");
+            }                       
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane,ex.getMessage());
-        }        
-        this.dispose();
+        }      
     }//GEN-LAST:event_jLabelNewTaskSaveMouseClicked
 
     /**
