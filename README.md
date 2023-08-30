@@ -58,6 +58,7 @@
 
 ## Tecnologias Utilizadas:
  	* Java
+  	* Java Swing
   	* Gradle	
 	* MySQL
 	* Xampp
