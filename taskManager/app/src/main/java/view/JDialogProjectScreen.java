@@ -23,6 +23,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
     public JDialogProjectScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        hideErrorFields();
         projectController = new ProjectController();
     }
 
@@ -44,6 +45,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
         jLabelNewProjectDescriptionCab = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaNewProjectDescription = new javax.swing.JTextArea();
+        jLabelProjectNameError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,17 +101,22 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
         jTextAreaNewProjectDescription.setRows(5);
         jScrollPane1.setViewportView(jTextAreaNewProjectDescription);
 
+        jLabelProjectNameError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabelProjectNameError.setForeground(new java.awt.Color(204, 51, 0));
+        jLabelProjectNameError.setText("Name is required.");
+
         javax.swing.GroupLayout jPanelNewProjectFormLayout = new javax.swing.GroupLayout(jPanelNewProjectForm);
         jPanelNewProjectForm.setLayout(jPanelNewProjectFormLayout);
         jPanelNewProjectFormLayout.setHorizontalGroup(
             jPanelNewProjectFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNewProjectFormLayout.createSequentialGroup()
+            .addGroup(jPanelNewProjectFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelNewProjectFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                    .addComponent(jLabelNewProjectDescriptionCab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNewProjectName)
-                    .addComponent(jLabelNewProjectNameCab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelNewProjectFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .addComponent(jLabelNewProjectDescriptionCab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNewProjectName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelNewProjectNameCab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelProjectNameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelNewProjectFormLayout.setVerticalGroup(
@@ -119,7 +126,9 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
                 .addComponent(jLabelNewProjectNameCab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNewProjectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addComponent(jLabelProjectNameError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelNewProjectDescriptionCab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
@@ -147,7 +156,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
 
     private void jLabelNewProjectSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewProjectSaveMouseClicked
         try {
-            if (!jTextFieldNewProjectName.getText().equals("")){
+            if (isFieldValid()){
                 Project project = new Project();
                 project.setName(jTextFieldNewProjectName.getText());
                 project.setDescription(jTextAreaNewProjectDescription.getText());        
@@ -156,8 +165,7 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
                         "Project successfully saved.");
                 this.dispose();
             }else {
-                JOptionPane.showMessageDialog(rootPane,
-                        "Project name required!");               
+                jLabelProjectNameError.setVisible(true);
             }            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane,ex.getMessage());
@@ -212,10 +220,19 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelNewProjectNameCab;
     private javax.swing.JLabel jLabelNewProjectSave;
     private javax.swing.JLabel jLabelNewProjectTitle;
+    private javax.swing.JLabel jLabelProjectNameError;
     private javax.swing.JPanel jPanelNewProjectForm;
     private javax.swing.JPanel jPanelNewProjectTitle;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaNewProjectDescription;
     private javax.swing.JTextField jTextFieldNewProjectName;
     // End of variables declaration//GEN-END:variables
+    
+    public void hideErrorFields(){
+        jLabelProjectNameError.setVisible(false);
+    }
+    
+    public boolean isFieldValid(){
+        return (!jTextFieldNewProjectName.getText().isEmpty());                
+    }
 }

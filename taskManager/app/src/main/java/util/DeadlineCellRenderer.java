@@ -8,8 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import model.Task;
 
-
-
 /**
  *
  * @author Jefferson
@@ -36,6 +34,5 @@ public class DeadlineCellRenderer extends DefaultTableCellRenderer{
             jLabel.setBackground(Color.red);            
         }       
         return jLabel;
-    }
-    
+    }    
 }
