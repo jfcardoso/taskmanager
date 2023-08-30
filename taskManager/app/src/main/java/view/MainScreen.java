@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRenderer;
 import util.DeadlineCellRenderer;
 import util.TaskTableModel;
 
@@ -472,6 +473,12 @@ public class MainScreen extends javax.swing.JFrame {
         // Changing the deadline background according to the task deadline.
         jTableTasks.getColumnModel().getColumn(2)
                 .setCellRenderer(new DeadlineCellRenderer());
+        
+        jTableTasks.getColumnModel().getColumn(4)
+                .setCellRenderer(new ButtonColumnCellRenderer("edit"));
+        
+         jTableTasks.getColumnModel().getColumn(5)
+                .setCellRenderer(new ButtonColumnCellRenderer("delete"));
 
         //Auto sort dos items da jTable
         //jTableTasks.setAutoCreateRowSorter(true);
