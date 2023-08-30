@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
+import util.DeadlineCellRenderer;
 import util.TaskTableModel;
 
 /**
@@ -30,10 +31,10 @@ public class MainScreen extends javax.swing.JFrame {
     TaskTableModel tasksModel;
     
     public MainScreen() {
-        initComponents();
-        decorateJTableTasks();
+        initComponents();        
         initDataAccessObjects();
         initComponentsModel();
+        decorateJTableTasks();
     }
 
     /**
@@ -467,9 +468,13 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.getTableHeader().setOpaque(false);
         jTableTasks.getTableHeader().setBackground(new Color(0, 102, 153));
         jTableTasks.getTableHeader().setForeground(new Color(255, 255, 255));
+        
+        // Changing the deadline background according to the task deadline.
+        jTableTasks.getColumnModel().getColumn(2)
+                .setCellRenderer(new DeadlineCellRenderer());
 
         //Auto sort dos items da jTable
-        jTableTasks.setAutoCreateRowSorter(true);
+        //jTableTasks.setAutoCreateRowSorter(true);
     }
     
     // Method responsible for showing task list or empty list screen.
