@@ -147,15 +147,22 @@ public class JDialogProjectScreen extends javax.swing.JDialog {
 
     private void jLabelNewProjectSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewProjectSaveMouseClicked
         try {
-            Project project = new Project();
-            project.setName(jTextFieldNewProjectName.getText());
-            project.setDescription(jTextAreaNewProjectDescription.getText());        
-            projectController.save(project);        
-            JOptionPane.showMessageDialog(rootPane,"Project successfully saved.");
+            if (!jTextFieldNewProjectName.getText().equals("")){
+                Project project = new Project();
+                project.setName(jTextFieldNewProjectName.getText());
+                project.setDescription(jTextAreaNewProjectDescription.getText());        
+                projectController.save(project);        
+                JOptionPane.showMessageDialog(rootPane,
+                        "Project successfully saved.");
+                this.dispose();
+            }else {
+                JOptionPane.showMessageDialog(rootPane,
+                        "Project name required!");               
+            }            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane,ex.getMessage());
         }        
-        this.dispose();
+        
     }//GEN-LAST:event_jLabelNewProjectSaveMouseClicked
 
     /**
